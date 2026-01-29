@@ -2,7 +2,7 @@ local Library = {}
 
 function Library:CreateWindow(hubName)
     local ScreenGui = Instance.new("ScreenGui")
-    ScreenGui.Name = "MetaLib"
+    ScreenGui.Name = "MetaLib_Custom"
     ScreenGui.Parent = game.CoreGui
     ScreenGui.ResetOnSpawn = false
 
@@ -16,22 +16,72 @@ function Library:CreateWindow(hubName)
     MainFrame.Parent = ScreenGui
     Instance.new("UICorner", MainFrame)
 
-    -- DEIN KORRIGIERTES TEXTLABEL (GRAU)
+    -- Dein graues TextLabel für den Namen
     local NameLabel = Instance.new("TextLabel")
     NameLabel.Name = "HubNameLabel"
     NameLabel.Position = UDim2.new(0.012, 0, 0.016, 0)
     NameLabel.Size = UDim2.new(0, 272, 0, 28)
-    NameLabel.BackgroundColor3 = Color3.fromRGB(152, 152, 152) -- Deine Farbe
+    NameLabel.BackgroundColor3 = Color3.fromRGB(152, 152, 152)
     NameLabel.Text = hubName or "Meta Hub"
-    NameLabel.TextColor3 = Color3.fromRGB(0, 0, 0) -- Schwarzer Text
+    NameLabel.TextColor3 = Color3.fromRGB(0, 0, 0)
     NameLabel.Font = Enum.Font.GothamBold
     NameLabel.TextSize = 14
     NameLabel.Parent = MainFrame
     Instance.new("UICorner", NameLabel)
 
-    -- Frame 1 (Header) & Frame 2 (Sidebar) folgen hier...
-    -- (Ich lasse den restlichen Code weg, damit es übersichtlich bleibt)
+    -- Frame 1 (Top Bar / Header)
+    local Frame1 = Instance.new("Frame")
+    Frame1.Name = "Header"
+    Frame1.Position = UDim2.new(0, 0, 0, 0)
+    Frame1.Size = UDim2.new(0, 510, 0, 37)
+    Frame1.BackgroundColor3 = Color3.fromRGB(42, 42, 42)
+    Frame1.BorderSizePixel = 0
+    Frame1.ZIndex = 0 -- Hinter dem NameLabel
+    Frame1.Parent = MainFrame
 
+    -- Frame 2 (Sidebar)
+    local Frame2 = Instance.new("Frame")
+    Frame2.Name = "Sidebar"
+    Frame2.Position = UDim2.new(0, 0, 0.118, 0)
+    Frame2.Size = UDim2.new(0, 104, 0, 277)
+    Frame2.BackgroundColor3 = Color3.fromRGB(29, 29, 29)
+    Frame2.BorderSizePixel = 0
+    Frame2.Parent = MainFrame
+
+    -- Schließen Button
+    local CloseButton = Instance.new("TextButton")
+    CloseButton.Name = "Schliessen"
+    CloseButton.Position = UDim2.new(0.922, 0, 0.016, 0)
+    CloseButton.Size = UDim2.new(0, 28, 0, 26)
+    CloseButton.BackgroundColor3 = Color3.fromRGB(83, 83, 83)
+    CloseButton.Text = "" 
+    CloseButton.Parent = MainFrame
+    Instance.new("UICorner", CloseButton)
+
+    -- Frame 3 (X Teil 1)
+    local Frame3 = Instance.new("Frame")
+    Frame3.Position = UDim2.new(0.429, 0, 0.077, 0)
+    Frame3.Size = UDim2.new(0, 4, 0, 21)
+    Frame3.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    Frame3.Rotation = -135
+    Frame3.BorderSizePixel = 0
+    Frame3.Parent = CloseButton
+
+    -- Frame 4 (X Teil 2)
+    local Frame4 = Instance.new("Frame")
+    Frame4.Position = UDim2.new(0.429, 0, 0.077, 0)
+    Frame4.Size = UDim2.new(0, 4, 0, 21)
+    Frame4.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    Frame4.Rotation = 135
+    Frame4.BorderSizePixel = 0
+    Frame4.Parent = CloseButton
+
+    -- Logik: Schließen
+    CloseButton.MouseButton1Click:Connect(function()
+        ScreenGui:Destroy()
+    end)
+
+    -- Hier geben wir das MainFrame zurück, damit man damit weiterarbeiten kann
     return MainFrame
 end
 
