@@ -1,66 +1,88 @@
 local Library = {}
 
 function Library:CreateWindow(Settings)
-    -- Die Library nimmt die Tabelle vom Loader an
-    local hubName = Settings.Name or "Default Name"
-    local keys = Settings.Keys or {}
-    local notes = Settings.NotesContent or "Keine Info"
-
+    Settings = Settings or {}
+    
+    -- Root: ScreenGui [cite: 3]
     local ScreenGui = Instance.new("ScreenGui", game.CoreGui)
-    ScreenGui.Name = "MetaLibUI"
+    ScreenGui.Name = "key sys"
+    ScreenGui.ResetOnSpawn = false
 
-    -- DEIN MAIN FRAME (exakt nach deiner rbxm)
-    local MainFrame = Instance.new("Frame", ScreenGui)
-    MainFrame.Name = "main background frame"
-    MainFrame.Size = UDim2.new(0, 510, 0, 314)
-    MainFrame.Position = UDim2.new(0.5, -255, 0.5, -157)
-    MainFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
-    Instance.new("UICorner", MainFrame)
+    -- Main: main background frame [cite: 3]
+    local Main = Instance.new("Frame", ScreenGui)
+    Main.Name = "main background frame"
+    Main.Size = UDim2.new(0, 510, 0, 314)
+    Main.Position = UDim2.new(0.5, -255, 0.5, -157)
+    Main.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+    Main.Active = true
+    Main.Draggable = true -- Damit du es bewegen kannst
+    Instance.new("UICorner", Main).CornerRadius = UDim.new(0, 8)
 
-    -- NAME LABEL (name des key sestem)
-    local NameLabel = Instance.new("TextLabel", MainFrame)
+    -- Label: name des key sestem [cite: 10]
+    local NameLabel = Instance.new("TextLabel", Main)
     NameLabel.Name = "name des key sestem"
-    NameLabel.Text = hubName
+    NameLabel.Text = Settings.Name or "metaril by ulticookie"
     NameLabel.Size = UDim2.new(0, 272, 0, 28)
     NameLabel.Position = UDim2.new(0.012, 0, 0.016, 0)
     NameLabel.BackgroundColor3 = Color3.fromRGB(152, 152, 152)
+    NameLabel.TextColor3 = Color3.fromRGB(0, 0, 0)
     Instance.new("UICorner", NameLabel)
 
-    -- NOTES CONTENT
-    local NotesLabel = Instance.new("TextLabel", MainFrame)
-    NotesLabel.Name = "notes content"
-    NotesLabel.Text = notes
-    NotesLabel.Size = UDim2.new(0, 200, 0, 100)
-    NotesLabel.Position = UDim2.new(0.55, 0, 0.2, 0)
-    NotesLabel.BackgroundTransparency = 0.5
-    NotesLabel.TextColor3 = Color3.new(1,1,1)
-    Instance.new("UICorner", NotesLabel)
+    -- Label: notes content [cite: 10, 11]
+    local Notes = Instance.new("TextLabel", Main)
+    Notes.Name = "notes content"
+    Notes.Text = Settings.NotesContent or "test text for nots hello (:"
+    Notes.Size = UDim2.new(0, 200, 0, 100)
+    Notes.Position = UDim2.new(0.55, 0, 0.2, 0)
+    Notes.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+    Notes.TextColor3 = Color3.fromRGB(255, 255, 255)
+    Notes.TextWrapped = true
+    Instance.new("UICorner", Notes)
 
-    -- KEY LOGIK (Kurzfassung)
-    if Settings.KeySystem then
-        print("Key System aktiv für: " .. hubName)
-        -- Hier kommt der Code hin, der prüft ob Input == keys[index]
+    -- TextBox: key eingabe [cite: 5]
+    local KeyInput = Instance.new("TextBox", Main)
+    KeyInput.Name = "key eingabe"
+    KeyInput.PlaceholderText = "Enter Key..."
+    KeyInput.Size = UDim2.new(0, 272, 0, 30)
+    KeyInput.Position = UDim2.new(0.012, 0, 0.2, 0)
+    KeyInput.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+    KeyInput.TextColor3 = Color3.new(1, 1, 1)
+    Instance.new("UICorner", KeyInput)
+
+    -- Button: check key [cite: 7, 8]
+    local CheckBtn = Instance.new("TextButton", Main)
+    CheckBtn.Name = "check key"
+    CheckBtn.Text = "check key"
+    CheckBtn.Size = UDim2.new(0, 100, 0, 30)
+    CheckBtn.Position = UDim2.new(0.012, 0, 0.35, 0)
+    CheckBtn.BackgroundColor3 = Color3.fromRGB(83, 83, 83)
+    Instance.new("UICorner", CheckBtn)
+
+    -- Button: discord link [cite: 7, 8]
+    if Settings.DiscordButton then
+        local DiscBtn = Instance.new("TextButton", Main)
+        DiscBtn.Name = "discord link"
+        DiscBtn.Text = "Discord"
+        DiscBtn.Size = UDim2.new(0, 100, 0, 30)
+        DiscBtn.Position = UDim2.new(0.012, 0, 0.8, 0)
+        DiscBtn.BackgroundColor3 = Color3.fromRGB(50, 50, 200)
+        DiscBtn.MouseButton1Click:Connect(function() setclipboard(Settings.Discord) end)
+        Instance.new("UICorner", DiscBtn)
     end
 
-    -- Draggable (Verschiebbar) machen
-    local function drag(f)
-        local s,i,p
-        f.InputBegan:Connect(function(input)
-            if input.UserInputType == Enum.UserInputType.MouseButton1 then
-                s=true; i=input.Position; p=f.Position
-            end
-        end)
-        game:GetService("UserInputService").InputChanged:Connect(function(input)
-            if s and input.UserInputType == Enum.UserInputType.MouseMovement then
-                local d = input.Position - i
-                f.Position = UDim2.new(p.X.Scale, p.X.Offset+d.X, p.Y.Scale, p.Y.Offset+d.Y)
-            end
-        end)
-        f.InputEnded:Connect(function(input) if input.UserInputType==Enum.UserInputType.MouseButton1 then s=false end end)
+    -- Button: youtube [cite: 7, 8]
+    if Settings.YoutubeButton then
+        local YTBtn = Instance.new("TextButton", Main)
+        YTBtn.Name = "youtube"
+        YTBtn.Text = "YouTube"
+        YTBtn.Size = UDim2.new(0, 100, 0, 30)
+        YTBtn.Position = UDim2.new(0.25, 0, 0.8, 0)
+        YTBtn.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
+        YTBtn.MouseButton1Click:Connect(function() setclipboard(Settings.YoutubeLink) end)
+        Instance.new("UICorner", YTBtn)
     end
-    drag(MainFrame)
 
-    return MainFrame
+    return Main
 end
 
 return Library
