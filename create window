@@ -1,66 +1,26 @@
-local Library = {}
+local MyLib = loadstring(game:HttpGet("DEIN_GITHUB_RAW_LINK_ZUR_SETUP_DATEI"))()
 
-function Library:CreateWindow(Settings)
-    -- Die Library nimmt die Tabelle vom Loader an
-    local hubName = Settings.Name or "Default Name"
-    local keys = Settings.Keys or {}
-    local notes = Settings.NotesContent or "Keine Info"
+-- Hier definieren wir alle Einstellungen, die du vorhin genannt hast
+local HubSettings = {
+    Name = "Meta Hub Material",
+    
+    -- Key System Einstellungen
+    KeySystem = true,                -- (enable key system?)
+    Keys = {"MeinKey123", "User2026"}, -- (keys)
+    KeyLink = "https://linkvertise.com/...", -- (key link)
+    
+    -- Info & Notes
+    NotesFromLink = true,            -- (enabel get key from link?)
+    NotesLink = "https://raw.githubusercontent.com/xshipper23-png/...", -- (Link zur Textdatei)
+    NotesContent = "Willkommen! Falls der Link offline ist, siehst du das hier.", -- (notes contend)
+    
+    -- Social Media Einstellungen
+    DiscordButton = true,            -- (enabel discord button)
+    Discord = "https://discord.gg/...", -- (discord link)
+    
+    YoutubeButton = true,            -- (enabel youtube button)
+    YoutubeLink = "https://youtube.com/...", -- (youtube link)
+}
 
-    local ScreenGui = Instance.new("ScreenGui", game.CoreGui)
-    ScreenGui.Name = "MetaLibUI"
-
-    -- DEIN MAIN FRAME (exakt nach deiner rbxm)
-    local MainFrame = Instance.new("Frame", ScreenGui)
-    MainFrame.Name = "main background frame"
-    MainFrame.Size = UDim2.new(0, 510, 0, 314)
-    MainFrame.Position = UDim2.new(0.5, -255, 0.5, -157)
-    MainFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
-    Instance.new("UICorner", MainFrame)
-
-    -- NAME LABEL (name des key sestem)
-    local NameLabel = Instance.new("TextLabel", MainFrame)
-    NameLabel.Name = "name des key sestem"
-    NameLabel.Text = hubName
-    NameLabel.Size = UDim2.new(0, 272, 0, 28)
-    NameLabel.Position = UDim2.new(0.012, 0, 0.016, 0)
-    NameLabel.BackgroundColor3 = Color3.fromRGB(152, 152, 152)
-    Instance.new("UICorner", NameLabel)
-
-    -- NOTES CONTENT
-    local NotesLabel = Instance.new("TextLabel", MainFrame)
-    NotesLabel.Name = "notes content"
-    NotesLabel.Text = notes
-    NotesLabel.Size = UDim2.new(0, 200, 0, 100)
-    NotesLabel.Position = UDim2.new(0.55, 0, 0.2, 0)
-    NotesLabel.BackgroundTransparency = 0.5
-    NotesLabel.TextColor3 = Color3.new(1,1,1)
-    Instance.new("UICorner", NotesLabel)
-
-    -- KEY LOGIK (Kurzfassung)
-    if Settings.KeySystem then
-        print("Key System aktiv für: " .. hubName)
-        -- Hier kommt der Code hin, der prüft ob Input == keys[index]
-    end
-
-    -- Draggable (Verschiebbar) machen
-    local function drag(f)
-        local s,i,p
-        f.InputBegan:Connect(function(input)
-            if input.UserInputType == Enum.UserInputType.MouseButton1 then
-                s=true; i=input.Position; p=f.Position
-            end
-        end)
-        game:GetService("UserInputService").InputChanged:Connect(function(input)
-            if s and input.UserInputType == Enum.UserInputType.MouseMovement then
-                local d = input.Position - i
-                f.Position = UDim2.new(p.X.Scale, p.X.Offset+d.X, p.Y.Scale, p.Y.Offset+d.Y)
-            end
-        end)
-        f.InputEnded:Connect(function(input) if input.UserInputType==Enum.UserInputType.MouseButton1 then s=false end end)
-    end
-    drag(MainFrame)
-
-    return MainFrame
-end
-
-return Library
+-- Jetzt starten wir das Fenster mit diesen Einstellungen
+MyLib:CreateWindow(HubSettings)
