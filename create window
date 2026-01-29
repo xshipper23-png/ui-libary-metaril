@@ -1,1 +1,19 @@
-MyLib:CreateWindow("Mein Meta-Hub")
+MyLib:CreateWindow({
+    Name = "Meta Hub v1.0",
+    
+    -- Key System Einstellungen
+    KeySystem = true,
+    Keys = {"Meta2026", "AdminKey"},
+    KeyLink = "https://linkvertise.com/...", -- Dein Link
+    
+    -- Notes von Website laden
+    NotesFromLink = true,
+    NotesLink = "https://raw.githubusercontent.com/xshipper23-png/...", -- Dein News Link
+    NotesContent = "Wird nur gezeigt wenn Link offline ist",
+    
+    -- Social Buttons
+    DiscordButton = true,
+    Discord = "https://discord.gg/dein-server",
+    YoutubeButton = true,
+    YoutubeLink = "https://youtube.com/..."
+})
