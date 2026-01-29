@@ -1,1 +1,85 @@
-print("hello word test")
+local Library = {}
+
+function Library:CreateWindow(titleText)
+    -- Root GUI
+    local ScreenGui = Instance.new("ScreenGui")
+    ScreenGui.Name = "MetaLib_Custom"
+    ScreenGui.Parent = game.CoreGui
+    ScreenGui.ResetOnSpawn = false
+
+    -- MainFrame
+    local MainFrame = Instance.new("Frame")
+    MainFrame.Name = "MainFrame"
+    MainFrame.Position = UDim2.new(0.161, 0, 0.126, 0)
+    MainFrame.Size = UDim2.new(0, 510, 0, 314)
+    MainFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+    MainFrame.BorderSizePixel = 0
+    MainFrame.Parent = ScreenGui
+    
+    local MainCorner = Instance.new("UICorner", MainFrame)
+
+    -- Frame 1 (Top Bar)
+    local Frame1 = Instance.new("Frame")
+    Frame1.Name = "Header"
+    Frame1.Position = UDim2.new(0, 0, 0, 0)
+    Frame1.Size = UDim2.new(0, 510, 0, 37)
+    Frame1.BackgroundColor3 = Color3.fromRGB(42, 42, 42)
+    Frame1.BorderSizePixel = 0
+    Frame1.Parent = MainFrame
+    
+    local Title = Instance.new("TextLabel")
+    Title.Size = UDim2.new(0, 200, 1, 0)
+    Title.Position = UDim2.new(0, 15, 0, 0)
+    Title.BackgroundTransparency = 1
+    Title.Text = titleText or "Script Hub"
+    Title.TextColor3 = Color3.new(1,1,1)
+    Title.TextXAlignment = Enum.TextXAlignment.Left
+    Title.Parent = Frame1
+
+    -- Frame 2 (Sidebar)
+    local Frame2 = Instance.new("Frame")
+    Frame2.Name = "Sidebar"
+    Frame2.Position = UDim2.new(0, 0, 0.118, 0)
+    Frame2.Size = UDim2.new(0, 104, 0, 277)
+    Frame2.BackgroundColor3 = Color3.fromRGB(29, 29, 29)
+    Frame2.BorderSizePixel = 0
+    Frame2.Parent = MainFrame
+
+    -- Schliessen Button
+    local CloseButton = Instance.new("TextButton")
+    CloseButton.Name = "Schliessen"
+    CloseButton.Position = UDim2.new(0.922, 0, 0.016, 0)
+    CloseButton.Size = UDim2.new(0, 28, 0, 26)
+    CloseButton.BackgroundColor3 = Color3.fromRGB(83, 83, 83)
+    CloseButton.Text = "" -- Text leer, da wir Frames für das X nutzen
+    CloseButton.Parent = MainFrame
+    
+    Instance.new("UICorner", CloseButton)
+
+    -- Frame 3 (Teil des X)
+    local Frame3 = Instance.new("Frame")
+    Frame3.Position = UDim2.new(0.429, 0, 0.077, 0)
+    Frame3.Size = UDim2.new(0, 4, 0, 21)
+    Frame3.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    Frame3.Rotation = -135
+    Frame3.BorderSizePixel = 0
+    Frame3.Parent = CloseButton
+
+    -- Frame 4 (Zweiter Teil des X)
+    local Frame4 = Instance.new("Frame")
+    Frame4.Position = UDim2.new(0.429, 0, 0.077, 0)
+    Frame4.Size = UDim2.new(0, 4, 0, 21)
+    Frame4.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    Frame4.Rotation = 135
+    Frame4.BorderSizePixel = 0
+    Frame4.Parent = CloseButton
+
+    -- Logik: Schließen
+    CloseButton.MouseButton1Click:Connect(function()
+        ScreenGui:Destroy()
+    end)
+
+    return MainFrame
+end
+
+return Library
