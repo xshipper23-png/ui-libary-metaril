@@ -1,0 +1,1 @@
+local MyLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/xshipper23-png/ui-libary-metaril/refs/heads/main/setup%20code"))()
