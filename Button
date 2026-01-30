@@ -1,0 +1,9 @@
+local KillBtn = MainTab:CreateButton({
+    Name = "Alle Töten",
+    Callback = function()
+        print("Boom! Alle tot.")
+    end
+})
+
+-- Button Text ändern:
+KillBtn:SetText("Cooldown...")
