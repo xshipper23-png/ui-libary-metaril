@@ -1,68 +1,47 @@
 local Metaril = {}
-local TweenService = game:GetService("TweenService")
-local UserInputService = game:GetService("UserInputService")
+Metaril.__index = Metaril
 
-function Metaril:CreateWindow(Config)
-    local Window = {}
+-- Hier definieren wir das Haupt-Framework
+function Metaril:CreateWindow(config)
+    local Main = {}
     
-    -- Erstelle die ScreenGui
-    local MainGui = Instance.new("ScreenGui")
-    MainGui.Name = "Metaril_" .. Config.Name
-    MainGui.Parent = game.CoreGui
+    -- GUI Erstellung
+    local ScreenGui = Instance.new("ScreenGui")
+    ScreenGui.Name = "MetarilUI"
+    ScreenGui.Parent = game:GetService("CoreGui")
     
-    -- Main Frame (Das Design)
     local MainFrame = Instance.new("Frame")
-    MainFrame.Size = UDim2.new(0, 500, 0, 350)
-    MainFrame.Position = UDim2.new(0.5, -250, 0.5, -175)
-    MainFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 25) -- Dunkler als Rayfield
+    MainFrame.Name = "MainFrame"
+    MainFrame.Size = UDim2.new(0, 450, 0, 300)
+    MainFrame.Position = UDim2.new(0.5, -225, 0.5, -150)
+    MainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 35) -- Metaril Dark Theme
     MainFrame.BorderSizePixel = 0
-    MainFrame.Parent = MainGui
+    MainFrame.Parent = ScreenGui
     
-    -- Abrundung (UICorner)
     local Corner = Instance.new("UICorner")
-    Corner.CornerRadius = UDim.new(0, 8)
+    Corner.CornerRadius = UDim.new(0, 10)
     Corner.Parent = MainFrame
 
-    -- Titel
     local Title = Instance.new("TextLabel")
-    Title.Text = Config.Name
-    Title.Size = UDim2.new(1, -20, 0, 30)
-    Title.Position = UDim2.new(0, 10, 0, 5)
-    Title.BackgroundTransparency = 1
+    Title.Size = UDim2.new(1, -20, 0, 40)
+    Title.Position = UDim2.new(0, 15, 0, 0)
+    Title.Text = config.Name or "Metaril UI"
     Title.TextColor3 = Color3.fromRGB(255, 255, 255)
-    Title.TextXAlignment = Enum.TextXAlignment.Left
+    Title.BackgroundTransparency = 1
     Title.Font = Enum.Font.GothamBold
+    Title.TextSize = 18
+    Title.TextXAlignment = Enum.TextXAlignment.Left
     Title.Parent = MainFrame
 
-    function Window:CreateTab(TabName)
-        local TabObj = {}
-        -- Hier käme die Logik für das Container-System der Tabs
-        
-        function TabObj:CreateButton(BtnConfig)
-            local Button = Instance.new("TextButton")
-            Button.Size = UDim2.new(1, -20, 0, 35)
-            Button.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
-            Button.Text = BtnConfig.Name
-            Button.TextColor3 = Color3.fromRGB(200, 200, 200)
-            Button.Parent = MainFrame -- Vereinfacht für dieses Beispiel
-            
-            local BtnCorner = Instance.new("UICorner")
-            BtnCorner.CornerRadius = UDim.new(0, 6)
-            BtnCorner.Parent = Button
-
-            Button.MouseButton1Click:Connect(function()
-                -- Kleiner Animationseffekt
-                TweenService:Create(Button, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(50, 50, 50)}):Play()
-                BtnConfig.Callback()
-                wait(0.2)
-                TweenService:Create(Button, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(35, 35, 35)}):Play()
-            end)
-        end
-        
-        return TabObj
+    print("Metaril: Window '" .. Title.Text .. "' geladen!")
+    
+    function Main:CreateTab(name)
+        print("Tab erstellt: " .. name)
+        -- Hier kannst du später Tab-Logik einbauen
+        return {}
     end
     
-    return Window
+    return Main
 end
 
-return Metaril
+return Metaril -- WICHTIG: Das muss in der letzten Zeile stehen!
