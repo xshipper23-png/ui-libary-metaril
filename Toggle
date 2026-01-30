@@ -1,0 +1,15 @@
+local FarmToggle = MainTab:CreateToggle({
+    Name = "Auto Farm",
+    CurrentValue = false, -- Startwert (aus)
+    Callback = function(Value)
+        -- Value ist entweder true oder false
+        if Value then
+            print("Farm gestartet")
+        else
+            print("Farm gestoppt")
+        end
+    end
+})
+
+-- Per Skript umschalten:
+FarmToggle:Set(true)
