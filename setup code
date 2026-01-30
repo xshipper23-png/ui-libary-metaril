@@ -1,121 +1,68 @@
-local Library = {}
+local Metaril = {}
+local TweenService = game:GetService("TweenService")
+local UserInputService = game:GetService("UserInputService")
 
-function Library:CreateWindow(Settings)
-    Settings = Settings or {}
+function Metaril:CreateWindow(Config)
+    local Window = {}
     
-    local ScreenGui = Instance.new("ScreenGui")
-    ScreenGui.Name = "key sys"
-    ScreenGui.Parent = game.CoreGui
-    ScreenGui.ResetOnSpawn = false
+    -- Erstelle die ScreenGui
+    local MainGui = Instance.new("ScreenGui")
+    MainGui.Name = "Metaril_" .. Config.Name
+    MainGui.Parent = game.CoreGui
+    
+    -- Main Frame (Das Design)
+    local MainFrame = Instance.new("Frame")
+    MainFrame.Size = UDim2.new(0, 500, 0, 350)
+    MainFrame.Position = UDim2.new(0.5, -250, 0.5, -175)
+    MainFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 25) -- Dunkler als Rayfield
+    MainFrame.BorderSizePixel = 0
+    MainFrame.Parent = MainGui
+    
+    -- Abrundung (UICorner)
+    local Corner = Instance.new("UICorner")
+    Corner.CornerRadius = UDim.new(0, 8)
+    Corner.Parent = MainFrame
 
-    -- Hauptfenster: main background frame
-    local Main = Instance.new("Frame")
-    Main.Name = "main background frame"
-    Main.Size = UDim2.new(0, 510, 0, 314)
-    Main.Position = UDim2.new(0.5, -255, 0.5, -157)
-    Main.BackgroundColor3 = Color3.fromRGB(80, 80, 80) -- Das dunkle Grau aus deinem Bild
-    Main.BorderSizePixel = 0
-    Main.Parent = ScreenGui
-
-    -- Schwarzer Rand für Main
-    local MainStroke = Instance.new("UIStroke")
-    MainStroke.Thickness = 3
-    MainStroke.Color = Color3.new(0,0,0)
-    MainStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-    MainStroke.Parent = Main
-
-    -- Titel: Label (name des key sestem)
+    -- Titel
     local Title = Instance.new("TextLabel")
-    Title.Name = "name des key sestem"
-    Title.Text = Settings.Name or "Label"
-    Title.Size = UDim2.new(0, 258, 0, 38)
-    Title.Position = UDim2.new(0.016, 0, 0.038, 0)
-    Title.BackgroundColor3 = Color3.fromRGB(120, 120, 120)
-    Title.TextSize = 25
-    Title.Font = Enum.Font.SourceSans
-    Title.TextColor3 = Color3.new(0,0,0)
-    Title.Parent = Main
-    
-    Instance.new("UICorner", Title).CornerRadius = UDim.new(0, 4)
-    local TitleStroke = Instance.new("UIStroke", Title)
-    TitleStroke.Thickness = 3
+    Title.Text = Config.Name
+    Title.Size = UDim2.new(1, -20, 0, 30)
+    Title.Position = UDim2.new(0, 10, 0, 5)
+    Title.BackgroundTransparency = 1
+    Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+    Title.TextXAlignment = Enum.TextXAlignment.Left
+    Title.Font = Enum.Font.GothamBold
+    Title.Parent = MainFrame
 
-    -- "enter key" Textanzeige
-    local EnterLabel = Instance.new("TextLabel")
-    EnterLabel.Name = "enter anzeige"
-    EnterLabel.Text = "enter key"
-    EnterLabel.Size = UDim2.new(0, 60, 0, 25)
-    EnterLabel.Position = UDim2.new(0.016, 0, 0.22, 0)
-    EnterLabel.BackgroundTransparency = 1
-    EnterLabel.TextXAlignment = Enum.TextXAlignment.Left
-    EnterLabel.Parent = Main
+    function Window:CreateTab(TabName)
+        local TabObj = {}
+        -- Hier käme die Logik für das Container-System der Tabs
+        
+        function TabObj:CreateButton(BtnConfig)
+            local Button = Instance.new("TextButton")
+            Button.Size = UDim2.new(1, -20, 0, 35)
+            Button.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+            Button.Text = BtnConfig.Name
+            Button.TextColor3 = Color3.fromRGB(200, 200, 200)
+            Button.Parent = MainFrame -- Vereinfacht für dieses Beispiel
+            
+            local BtnCorner = Instance.new("UICorner")
+            BtnCorner.CornerRadius = UDim.new(0, 6)
+            BtnCorner.Parent = Button
 
-    -- Key Eingabefeld: key eingabe
-    local KeyInput = Instance.new("TextBox")
-    KeyInput.Name = "key eingabe"
-    KeyInput.Text = ""
-    KeyInput.Size = UDim2.new(0, 258, 0, 64)
-    KeyInput.Position = UDim2.new(0.016, 0, 0.33, 0)
-    KeyInput.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
-    KeyInput.Parent = Main
-    
-    Instance.new("UICorner", KeyInput).CornerRadius = UDim.new(0, 4)
-    local InputStroke = Instance.new("UIStroke", KeyInput)
-    InputStroke.Thickness = 3
-
-    -- Notes Fenster: Dotes
-    local NotesBox = Instance.new("Frame")
-    NotesBox.Name = "notes frame"
-    NotesBox.Size = UDim2.new(0, 218, 0, 64)
-    NotesBox.Position = UDim2.new(0.55, 0, 0.33, 0)
-    NotesBox.BackgroundColor3 = Color3.fromRGB(160, 160, 160)
-    NotesBox.Parent = Main
-    
-    Instance.new("UICorner", NotesBox).CornerRadius = UDim.new(0, 4)
-    Instance.new("UIStroke", NotesBox).Thickness = 3
-
-    local NotesLabel = Instance.new("TextLabel")
-    NotesLabel.Name = "Dotes"
-    NotesLabel.Text = Settings.NotesContent or "test text for nots hello (:"
-    NotesLabel.Size = UDim2.new(1, -10, 1, -10)
-    NotesLabel.Position = UDim2.new(0, 5, 0, 5)
-    NotesLabel.BackgroundTransparency = 1
-    NotesLabel.TextWrapped = true
-    NotesLabel.TextXAlignment = Enum.TextXAlignment.Left
-    NotesLabel.Parent = NotesBox
-
-    -- Button Erstellungs-Funktion für das Design
-    local function makeBtn(name, text, pos, color)
-        local btn = Instance.new("TextButton")
-        btn.Name = name
-        btn.Text = text
-        btn.Size = UDim2.new(0, 125, 0, 52)
-        btn.Position = pos
-        btn.BackgroundColor3 = color or Color3.fromRGB(200, 200, 200)
-        btn.TextSize = 30
-        btn.Parent = Main
-        Instance.new("UICorner", btn).CornerRadius = UDim.new(0, 6)
-        local s = Instance.new("UIStroke", btn)
-        s.Thickness = 3
-        return btn
+            Button.MouseButton1Click:Connect(function()
+                -- Kleiner Animationseffekt
+                TweenService:Create(Button, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(50, 50, 50)}):Play()
+                BtnConfig.Callback()
+                wait(0.2)
+                TweenService:Create(Button, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(35, 35, 35)}):Play()
+            end)
+        end
+        
+        return TabObj
     end
-
-    makeBtn("get key", "get key", UDim2.new(0.016, 0, 0.57, 0))
-    makeBtn("check key", "check key", UDim2.new(0.275, 0, 0.57, 0))
-    makeBtn("discord link", "Discord", UDim2.new(0.55, 0, 0.57, 0), Color3.fromRGB(0, 120, 255))
-    makeBtn("youtube", "youtube", UDim2.new(0.55, 0, 0.76, 0), Color3.fromRGB(255, 0, 0))
-
-    -- Footer: werbung s content
-    local Footer = Instance.new("TextLabel")
-    Footer.Name = "werbung s content"
-    Footer.Text = "ui libary metaril by ulticookie"
-    Footer.Size = UDim2.new(1, -6, 0, 22)
-    Footer.Position = UDim2.new(0, 3, 0.93, 0)
-    Footer.BackgroundColor3 = Color3.fromRGB(170, 170, 170)
-    Footer.Parent = Main
-    Instance.new("UIStroke", Footer).Thickness = 2
-
-    return Main
+    
+    return Window
 end
 
-return Library
+return Metaril
