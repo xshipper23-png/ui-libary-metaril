@@ -1,0 +1,12 @@
+local SpeedSlider = MainTab:CreateSlider({
+    Name = "WalkSpeed",
+    Min = 16,
+    Max = 500,
+    CurrentValue = 16, -- Startwert
+    Callback = function(Value)
+        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Value
+    end
+})
+
+-- Per Skript ändern:
+SpeedSlider:Set(100)
