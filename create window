@@ -1,16 +1,8 @@
-local Metaril = loadstring(game:HttpGet("DEINE_URL_HIER"))()
-
 local Window = Metaril:CreateWindow({
-    Name = "Metaril UI",
-    LoadingTitle = "Metaril Framework",
-    LoadingSubtitle = "by YourName"
-})
-
-local Tab = Window:CreateTab("Main")
-
-Tab:CreateButton({
-    Name = "Klick mich!",
-    Callback = function()
-        print("Button wurde gedrückt!")
-    end
+    Name = "Metaril Hub", -- Der Titel oben
+    Theme = { -- Optional: Eigene Farben
+        Background = Color3.fromRGB(20, 20, 20),
+        Accent = Color3.fromRGB(255, 170, 0), -- Hauptfarbe (z.B. Orange)
+        Text = Color3.fromRGB(255, 255, 255)
+    }
 })
