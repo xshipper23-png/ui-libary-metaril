@@ -1,0 +1,2 @@
+local MainTab = Window:CreateTab("Farmen")
+local PlayerTab = Window:CreateTab("Spieler")
