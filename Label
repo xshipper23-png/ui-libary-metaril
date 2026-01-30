@@ -1,0 +1,4 @@
+local Status = MainTab:CreateLabel("Status: Inaktiv")
+
+-- Später im Code ändern:
+Status:Set("Status: Aktiv!")
