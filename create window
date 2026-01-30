@@ -1,26 +1,16 @@
-local MyLib = loadstring(game:HttpGet("DEIN_GITHUB_RAW_LINK_ZUR_SETUP_DATEI"))()
+local Metaril = loadstring(game:HttpGet("DEINE_URL_HIER"))()
 
--- Hier definieren wir alle Einstellungen, die du vorhin genannt hast
-local HubSettings = {
-    Name = "Meta Hub Material",
-    
-    -- Key System Einstellungen
-    KeySystem = true,                -- (enable key system?)
-    Keys = {"MeinKey123", "User2026"}, -- (keys)
-    KeyLink = "https://linkvertise.com/...", -- (key link)
-    
-    -- Info & Notes
-    NotesFromLink = true,            -- (enabel get key from link?)
-    NotesLink = "https://raw.githubusercontent.com/xshipper23-png/...", -- (Link zur Textdatei)
-    NotesContent = "Willkommen! Falls der Link offline ist, siehst du das hier.", -- (notes contend)
-    
-    -- Social Media Einstellungen
-    DiscordButton = true,            -- (enabel discord button)
-    Discord = "https://discord.gg/...", -- (discord link)
-    
-    YoutubeButton = true,            -- (enabel youtube button)
-    YoutubeLink = "https://youtube.com/...", -- (youtube link)
-}
+local Window = Metaril:CreateWindow({
+    Name = "Metaril UI",
+    LoadingTitle = "Metaril Framework",
+    LoadingSubtitle = "by YourName"
+})
 
--- Jetzt starten wir das Fenster mit diesen Einstellungen
-MyLib:CreateWindow(HubSettings)
+local Tab = Window:CreateTab("Main")
+
+Tab:CreateButton({
+    Name = "Klick mich!",
+    Callback = function()
+        print("Button wurde gedrückt!")
+    end
+})
