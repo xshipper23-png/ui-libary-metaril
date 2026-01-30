@@ -1,0 +1,11 @@
+local WeaponDrop = MainTab:CreateDropdown({
+    Name = "Waffe wählen",
+    Options = {"Schwert", "Pistole", "Bombe"}, -- Die Liste
+    CurrentOption = "Schwert", -- Was am Anfang ausgewählt ist
+    Callback = function(Option)
+        print("Du hast gewählt: " .. Option)
+    end
+})
+
+-- Liste aktualisieren (z.B. wenn Spieler neue Items bekommt):
+WeaponDrop:Refresh({"God Sword", "Admin Gun"})
